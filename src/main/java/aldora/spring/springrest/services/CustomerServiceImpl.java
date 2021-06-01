@@ -1,5 +1,6 @@
 package aldora.spring.springrest.services;
 
+import aldora.spring.springrest.api.exceptions.ResourceNotFoundException;
 import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.controllers.v1.CustomerController;
@@ -32,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO getCustomerById(Long id) {
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 
         if (customerOptional.isEmpty()) {
-            throw new RuntimeException("cutomer not found");
+            throw new ResourceNotFoundException("cutomer not found");
         }
 
         Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
