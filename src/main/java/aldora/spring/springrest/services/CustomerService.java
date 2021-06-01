@@ -13,4 +13,6 @@ public interface CustomerService {
     CustomerDTO store(CustomerDTO customerDTO);
 
     CustomerDTO update(Long id, CustomerDTO customerDTO);
+
+    void delete(Long id);
 }
