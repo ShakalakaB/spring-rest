@@ -2,6 +2,7 @@ package aldora.spring.springrest.services;
 
 import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
+import aldora.spring.springrest.controllers.v1.CustomerController;
 import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -23,22 +24,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> getAllCustomers() {
         return customerRepository.findAll().stream()
-                .map(customer -> {
-                    CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
-                    return customerDTO;
-                })
+                .map(customerMapper::customerToCustomerDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public CustomerDTO getCustomerById(Long id) {
         return customerRepository.findById(id)
-                .map(customer -> {
-                    CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
-                    return customerDTO;
-                })
+                .map(customerMapper::customerToCustomerDTO)
                 .orElseThrow(RuntimeException::new);
     }
 
@@ -68,8 +61,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     private CustomerDTO saveCustomerDTO(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
-        CustomerDTO savedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-        savedCustomerDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
-        return savedCustomerDTO;
+        return customerMapper.customerToCustomerDTO(savedCustomer);
     }
 }
