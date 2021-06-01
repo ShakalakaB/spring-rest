@@ -2,6 +2,7 @@ package aldora.spring.springrest.services;
 
 import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
+import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO getCustomerById(Long id) {
         return customerRepository.findById(id)
-                .map(customerMapper::customerToCustomerDTO)
+                .map(customer -> {
+                    CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+                    customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
+                    return customerDTO;
+                })
                 .orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public CustomerDTO store(CustomerDTO customerDTO) {
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        Customer savedCustomer = customerRepository.save(customer);
+        CustomerDTO savedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+        savedCustomerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
+        return savedCustomerDTO;
     }
 }
