@@ -5,6 +5,10 @@ import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.api.v1.model.CustomerListDTO;
 import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.services.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(tags = {"Customer"})
+@SwaggerDefinition(tags = {
+        @Tag(name = "Customer Resource", description = "Operations for customer")
+})
 @Controller
 @RequestMapping(CustomerController.API_V_1_CUSTOMERS)
 public class CustomerController {
@@ -49,6 +57,7 @@ public class CustomerController {
         );
     }
 
+    @ApiOperation(value = "Create a customer", notes = "notes of the api")
     @PostMapping()
     public ResponseEntity<CustomerDTO> createNewCustomer(CustomerDTO customerDTO) {
         CustomerDTO savedCustomerDTO = customerService.store(customerDTO);
