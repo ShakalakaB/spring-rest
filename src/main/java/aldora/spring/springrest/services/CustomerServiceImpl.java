@@ -3,7 +3,6 @@ package aldora.spring.springrest.services;
 import aldora.spring.springrest.api.exceptions.ResourceNotFoundException;
 import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
-import aldora.spring.springrest.controllers.v1.CustomerController;
 import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
