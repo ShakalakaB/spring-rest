@@ -1,4 +1,4 @@
-package test.java.aldora.spring.springrest;
+package aldora.spring.springrest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

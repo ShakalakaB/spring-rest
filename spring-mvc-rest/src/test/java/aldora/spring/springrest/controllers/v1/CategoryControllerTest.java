@@ -1,4 +1,4 @@
-package test.java.aldora.spring.springrest.controllers.v1;
+package aldora.spring.springrest.controllers.v1;
 
 import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import aldora.spring.springrest.services.CategoryService;

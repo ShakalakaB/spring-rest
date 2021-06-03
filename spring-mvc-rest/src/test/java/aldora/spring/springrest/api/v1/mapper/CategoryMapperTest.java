@@ -1,4 +1,4 @@
-package test.java.aldora.spring.springrest.api.v1.mapper;
+package aldora.spring.springrest.api.v1.mapper;
 
 import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import aldora.spring.springrest.domain.Category;
