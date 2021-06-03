@@ -1,7 +1,8 @@
-package aldora.spring.springrest.controllers.v1;
+package test.java.aldora.spring.springrest.controllers.v1;
 
 import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import aldora.spring.springrest.services.CategoryService;
+import aldora.spring.springrest.controllers.v1.CategoryController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
