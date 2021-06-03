@@ -1,9 +1,7 @@
 package aldora.spring.springrest.controllers.v1;
 
-import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.api.v1.model.CustomerListDTO;
-import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
