@@ -29,4 +29,13 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId> org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
