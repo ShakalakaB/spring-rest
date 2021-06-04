@@ -1,7 +1,9 @@
 package aldora.spring.springrest.controllers.v1;
 
-import aldora.spring.springrest.api.v1.model.CustomerDTO;
-import aldora.spring.springrest.api.v1.model.CustomerListDTO;
+//import aldora.spring.springrest.api.v1.model.CustomerDTO;
+//import aldora.spring.springrest.api.v1.model.CustomerListDTO;
+import aldora.spring.springrest.model.CustomerDTO;
+import aldora.spring.springrest.model.CustomerListDTO;
 import aldora.spring.springrest.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +38,10 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers() {
-        return new ResponseEntity<CustomerListDTO>(
-                new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK
-        );
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+
+        return new ResponseEntity<>(customerListDTO, HttpStatus.OK);
     }
 
     @GetMapping("/list")
@@ -74,6 +77,6 @@ public class CustomerController {
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerService.delete(id);
 
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

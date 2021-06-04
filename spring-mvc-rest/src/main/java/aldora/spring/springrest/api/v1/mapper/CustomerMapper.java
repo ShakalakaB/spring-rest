@@ -1,8 +1,9 @@
 package aldora.spring.springrest.api.v1.mapper;
 
-import aldora.spring.springrest.api.v1.model.CustomerDTO;
+//import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.controllers.v1.CustomerController;
 import aldora.spring.springrest.domain.Customer;
+import aldora.spring.springrest.model.CustomerDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

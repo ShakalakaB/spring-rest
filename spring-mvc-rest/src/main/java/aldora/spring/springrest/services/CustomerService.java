@@ -1,6 +1,10 @@
 package aldora.spring.springrest.services;
 
-import aldora.spring.springrest.api.v1.model.CustomerDTO;
+//import aldora.spring.springrest.api.v1.model.CustomerDTO;
+
+
+
+import aldora.spring.springrest.model.CustomerDTO;
 
 import java.util.List;
 
