@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryMapper extends BaseMapper<Category> {
     List<Category> mySelect(Params params);
 
     MyPager<Category> myPagerSelect(MyPager<Category> myPager, @Param("params") Params params);
+
+    MyPager<Map<String, Category>> myPagerMapSelect(MyPager<Category> myPager, @Param("params") Params params);
 }

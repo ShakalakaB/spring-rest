@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -69,6 +70,17 @@ public class CategoryController {
         params.setName("Exotic");
 
         MyPager<Category> result = categoryMapper.myPagerSelect(myPager, params);
+
+        return result;
+    }
+
+    @GetMapping("/list/map")
+    public MyPager<Map<String, Category>> myPagerMapCategoriesList() {
+        MyPager<Category> myPager = new MyPager<>(1, 1, "Fruits");
+        Params params = new Params();
+        params.setName("Exotic");
+
+        MyPager<Map<String, Category>> result = categoryMapper.myPagerMapSelect(myPager, params);
 
         return result;
     }
