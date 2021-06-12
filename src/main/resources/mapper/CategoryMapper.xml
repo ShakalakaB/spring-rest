@@ -4,4 +4,7 @@
     <select id="mySelect" resultType="aldora.spring.springrest.domain.Category">
         select * from category where name = #{name}
     </select>
+    <select id="myPagerSelect" resultType="aldora.spring.springrest.domain.Category">
+        select * from category where name = #{params.name}
+    </select>
 </mapper>

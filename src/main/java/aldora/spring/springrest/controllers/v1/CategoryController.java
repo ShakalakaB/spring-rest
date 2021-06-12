@@ -4,7 +4,7 @@ import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import aldora.spring.springrest.api.v1.model.CategoryListDTO;
 import aldora.spring.springrest.domain.Category;
 import aldora.spring.springrest.mybatis.MyPager;
-import aldora.spring.springrest.mybatis.ParamObject;
+import aldora.spring.springrest.mybatis.Params;
 import aldora.spring.springrest.mybatis.mapper.CategoryMapper;
 import aldora.spring.springrest.mybatis.service.CategoryMybatisService;
 import aldora.spring.springrest.services.CategoryService;
@@ -53,11 +53,23 @@ public class CategoryController {
     }
 
     @GetMapping("/list/myselect")
-    public List<Category> myPagerCategoriesList() {
-        Page<Category> myPager = new MyPager<Category>(1, 6, "Nuts");
-        ParamObject paramObject = new ParamObject();
-        paramObject.setName("Exotic");
-        List<Category> result = categoryMapper.mySelect(paramObject);
+    public List<Category> myselectCategoriesList() {
+        Params params = new Params();
+        params.setName("Exotic");
+
+        List<Category> result = categoryMapper.mySelect(params);
+
+        return result;
+    }
+
+    @GetMapping("/list/mypager")
+    public MyPager<Category> myPagerCategoriesList() {
+        MyPager<Category> myPager = new MyPager<>(1, 1, "Fruits");
+        Params params = new Params();
+        params.setName("Exotic");
+
+        MyPager<Category> result = categoryMapper.myPagerSelect(myPager, params);
+
         return result;
     }
 
