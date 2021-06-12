@@ -48,7 +48,7 @@ public class CategoryController {
 
     @GetMapping("/list/pager")
     public IPage<Category> pageCategoriesList() {
-        Page<Category> page = new Page<>(1, 6);
+        Page<Category> page = new Page<>(2, 1);
         page.addOrder(OrderItem.asc("name"));
         return categoryMapper.selectPage(page, Wrappers.<Category>query().orderByAsc("id"));
     }
@@ -67,10 +67,11 @@ public class CategoryController {
     public MyPager<Category> myPagerCategoriesList() {
         MyPager<Category> myPager = new MyPager<>(1, 1, "Fruits");
         Params params = new Params();
-        params.setName("Exotic");
+//        params.setName("Exotic");
 
 //        MyPager<Category> result = categoryMapper.myPagerSelect(myPager, params);
-        MyPager<Category> result = categoryMapper.myPagerSelect2(myPager, params);
+//        MyPager<Category> result = categoryMapper.myPagerSelect2(myPager, params);
+        MyPager<Category> result = categoryMapper.myPagerSelectIf(myPager, params);
 
         return result;
     }

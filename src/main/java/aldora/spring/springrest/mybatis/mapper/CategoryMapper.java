@@ -18,4 +18,6 @@ public interface CategoryMapper extends BaseMapper<Category> {
     MyPager<Category> myPagerSelect2(MyPager<Category> myPager, Params params);
 
     MyPager<Map<String, Category>> myPagerMapSelect(MyPager<Category> myPager, @Param("params") Params params);
+
+    MyPager<Category> myPagerSelectIf(MyPager<Category> myPager, @Param("params") Params params);
 }

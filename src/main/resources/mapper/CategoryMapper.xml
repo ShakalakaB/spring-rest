@@ -2,15 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="aldora.spring.springrest.mybatis.mapper.CategoryMapper">
     <select id="mySelect" resultType="aldora.spring.springrest.domain.Category">
-        select * from category where name = #{name}
+        select *
+        from category
+        where name = #{name}
     </select>
     <select id="myPagerSelect" resultType="aldora.spring.springrest.domain.Category">
-        select * from category where name = #{params.name}
+        select *
+        from category
+        where name = #{params.name}
     </select>
     <select id="myPagerSelect2" resultType="aldora.spring.springrest.domain.Category">
-        select * from category where name = #{params.name}
+        select *
+        from category
+        where name = #{params.name}
     </select>
     <select id="myPagerMapSelect" resultType="java.util.Map">
-        select * from category where name = #{params.name}
+        select *
+        from category
+        where name = #{params.name}
+    </select>
+    <select id="myPagerSelectIf" resultType="aldora.spring.springrest.domain.Category">
+        select * from category
+        <where>
+            <if test="params.name != null">
+                name = #{params.name}
+            </if>
+        </where>
     </select>
 </mapper>
