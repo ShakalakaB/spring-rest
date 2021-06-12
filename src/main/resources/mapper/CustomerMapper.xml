@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="aldora.spring.springrest.mybatis.mapper.CustomerMapper">
+
+    <resultMap id="customerMap" type="aldora.spring.springrest.domain.Customer">
+        <id column="id" property="id"/>
+        <result column="first_name" property="firstName"/>
+        <result column="last_name" property="lastName"/>
+        <collection property="payments" ofType="aldora.spring.springrest.domain.Payment" columnPrefix="p_">
+            <id column="id" property="id"/>
+            <result column="description" property="description"/>
+        </collection>
+    </resultMap>
+
+    <select id="getCustomers" resultType="aldora.spring.springrest.domain.Customer" resultMap="customerMap">
+        select c.*, p.id as p_id, p.description as p_description
+        from customer c
+        left join payment p on c.id = p.customer_id
+    </select>
+</mapper>

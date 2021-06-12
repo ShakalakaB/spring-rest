@@ -1,14 +1,17 @@
 package aldora.spring.springrest.controllers.v1;
 
-import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.api.v1.model.CustomerListDTO;
+import aldora.spring.springrest.domain.Category;
 import aldora.spring.springrest.domain.Customer;
+import aldora.spring.springrest.mybatis.mapper.CustomerMapper;
 import aldora.spring.springrest.services.CustomerService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,9 @@ public class CustomerController {
     public static final String API_V_1_CUSTOMERS = "/api/v1/customers";
     private final CustomerService customerService;
 
+    @Autowired(required = false)
+    private CustomerMapper customerMapper;
+
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
@@ -44,10 +50,10 @@ public class CustomerController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<CustomerDTO>> getAllCategoriesList() {
-        return new ResponseEntity<>(
-                customerService.getAllCustomers(), HttpStatus.OK
-        );
+    public ResponseEntity<List<Customer>> getAllCategoriesList() {
+        List<Customer> customers = customerMapper.getCustomers();
+
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
