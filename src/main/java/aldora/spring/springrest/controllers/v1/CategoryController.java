@@ -52,7 +52,7 @@ public class CategoryController {
         return categoryMapper.selectPage(page, Wrappers.<Category>query().orderByAsc("id"));
     }
 
-    @GetMapping("/list/mypager")
+    @GetMapping("/list/myselect")
     public List<Category> myPagerCategoriesList() {
         Page<Category> myPager = new MyPager<Category>(1, 6, "Nuts");
         ParamObject paramObject = new ParamObject();
