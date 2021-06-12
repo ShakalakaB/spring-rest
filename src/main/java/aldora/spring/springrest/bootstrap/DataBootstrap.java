@@ -49,10 +49,10 @@ public class DataBootstrap implements CommandLineRunner {
         dried.setName("Dried");
 
         Category fresh = new Category();
-        fruits.setName("Fresh");
+        fresh.setName("Fresh");
 
         Category exotic = new Category();
-        fresh.setName("Exotic");
+        exotic.setName("Exotic");
 
         Category nuts = new Category();
         nuts.setName("Nuts");
