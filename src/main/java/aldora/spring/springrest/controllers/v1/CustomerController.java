@@ -50,8 +50,8 @@ public class CustomerController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Customer>> getAllCategoriesList() {
-        List<Customer> customers = customerMapper.getCustomers();
+    public ResponseEntity<List<CustomerDTO>> getAllCategoriesList() {
+        List<CustomerDTO> customers = customerMapper.getCustomers();
 
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }

@@ -1,9 +1,12 @@
 package aldora.spring.springrest.api.v1.model;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +19,7 @@ public class CustomerDTO {
 
     @JsonProperty("customer_url")
     private String customerUrl;
+
+    @JsonProperty("payments")
+    private List<PaymentDTO> payments;
 }
