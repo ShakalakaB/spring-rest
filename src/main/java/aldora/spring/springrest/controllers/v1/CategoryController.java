@@ -69,7 +69,8 @@ public class CategoryController {
         Params params = new Params();
         params.setName("Exotic");
 
-        MyPager<Category> result = categoryMapper.myPagerSelect(myPager, params);
+//        MyPager<Category> result = categoryMapper.myPagerSelect(myPager, params);
+        MyPager<Category> result = categoryMapper.myPagerSelect2(myPager, params);
 
         return result;
     }
