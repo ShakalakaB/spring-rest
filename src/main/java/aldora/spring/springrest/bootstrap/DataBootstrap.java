@@ -29,12 +29,14 @@ public class DataBootstrap implements CommandLineRunner {
         customer1.setId(1L);
         customer1.setFirstName("Michale");
         customer1.setLastName("Weston");
+        customer1.setPassword("password1");
         customerRepository.save(customer1);
 
         Customer customer2 = new Customer();
         customer2.setId(2L);
         customer2.setFirstName("Sam");
         customer2.setLastName("Axe");
+        customer2.setLastName("password2");
 
         customerRepository.save(customer2);
 
