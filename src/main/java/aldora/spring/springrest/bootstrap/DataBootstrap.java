@@ -5,16 +5,19 @@ import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.repositories.CategoryRepository;
 import aldora.spring.springrest.repositories.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataBootstrap implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final CustomerRepository customerRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public DataBootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+    public DataBootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.categoryRepository = categoryRepository;
         this.customerRepository = customerRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -29,14 +32,14 @@ public class DataBootstrap implements CommandLineRunner {
         customer1.setId(1L);
         customer1.setFirstName("Michale");
         customer1.setLastName("Weston");
-        customer1.setPassword("password1");
+        customer1.setPassword(bCryptPasswordEncoder.encode("password1"));
         customerRepository.save(customer1);
 
         Customer customer2 = new Customer();
         customer2.setId(2L);
         customer2.setFirstName("Sam");
         customer2.setLastName("Axe");
-        customer2.setLastName("password2");
+        customer2.setPassword(bCryptPasswordEncoder.encode("password2"));
 
         customerRepository.save(customer2);
 

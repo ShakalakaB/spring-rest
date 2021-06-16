@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,11 @@ import java.util.List;
 public class CustomerController {
     public static final String API_V_1_CUSTOMERS = "/api/v1/customers";
     private final CustomerService customerService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.customerService = customerService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @InitBinder
@@ -49,6 +52,7 @@ public class CustomerController {
     @ApiOperation(value = "Create a customer", notes = "notes of the api")
     @PostMapping()
     public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+        customerDTO.setPassword(bCryptPasswordEncoder.encode(customerDTO.getPassword()));
         CustomerDTO savedCustomerDTO = customerService.store(customerDTO);
 
         return savedCustomerDTO;
