@@ -17,5 +17,6 @@ public class CustomerDTO {
     @JsonProperty("customer_url")
     private String customerUrl;
 
+    @ApiModelProperty
     private String password;
 }
