@@ -5,8 +5,12 @@ import aldora.spring.springrest.api.v1.mapper.CustomerMapper;
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.repositories.CustomerRepository;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,5 +66,15 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDTO saveCustomerDTO(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
         return customerMapper.customerToCustomerDTO(savedCustomer);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String firstName) throws UsernameNotFoundException {
+        Customer customer = customerRepository.findByFirstName(firstName);
+
+        if (customer == null) throw new UsernameNotFoundException(firstName);
+
+        return new User(customer.getFirstName(), customer.getPassword(), true,
+                true, true, true, new ArrayList<>());
     }
 }
