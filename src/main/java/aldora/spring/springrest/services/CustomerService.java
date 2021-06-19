@@ -10,6 +10,8 @@ public interface CustomerService extends UserDetailsService {
 
     CustomerDTO getCustomerById(Long id);
 
+    CustomerDTO getCustomerByFirstName(String firstName);
+
     CustomerDTO store(CustomerDTO customerDTO);
 
     CustomerDTO update(Long id, CustomerDTO customerDTO);
