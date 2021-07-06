@@ -7,6 +7,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +25,12 @@ public class CustomerController {
     public static final String API_V_1_CUSTOMERS = "/api/v1/customers";
     private final CustomerService customerService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final Environment environment;
 
-    public CustomerController(CustomerService customerService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public CustomerController(CustomerService customerService, BCryptPasswordEncoder bCryptPasswordEncoder, Environment environment) {
         this.customerService = customerService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.environment = environment;
     }
 
     @InitBinder
