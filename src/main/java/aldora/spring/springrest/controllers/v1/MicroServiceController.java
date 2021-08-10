@@ -51,14 +51,7 @@ public class MicroServiceController {
 
     @GetMapping("/feign/exception")
     public List<CustomerDTO> getFeignException() {
-        List<CustomerDTO> customerDTOList = new ArrayList<>();
-        try {
-//            List<CustomerDTO> customerDTOList = accountFeignService.getCustomerException();
-            customerDTOList = accountFeignService.getCustomerException();
-        } catch (FeignException e) {
-            e.printStackTrace();
-        }
-
+        List<CustomerDTO> customerDTOList = accountFeignService.getCustomerException();
 
         return customerDTOList;
     }
