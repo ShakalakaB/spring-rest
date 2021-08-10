@@ -11,4 +11,7 @@ import java.util.List;
 public interface AccountFeignService {
     @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     List<CustomerDTO> getCustomerList();
+
+    @GetMapping(value = "/listdd", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<CustomerDTO> getCustomerException();
 }

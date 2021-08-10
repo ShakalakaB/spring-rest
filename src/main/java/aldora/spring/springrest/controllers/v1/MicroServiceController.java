@@ -2,6 +2,7 @@ package aldora.spring.springrest.controllers.v1;
 
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.feign.AccountFeignService;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,6 +45,20 @@ public class MicroServiceController {
     @GetMapping("/feign/getList")
     public List<CustomerDTO> getFeignCustomers() {
         List<CustomerDTO> customerDTOList = accountFeignService.getCustomerList();
+
+        return customerDTOList;
+    }
+
+    @GetMapping("/feign/exception")
+    public List<CustomerDTO> getFeignException() {
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
+        try {
+//            List<CustomerDTO> customerDTOList = accountFeignService.getCustomerException();
+            customerDTOList = accountFeignService.getCustomerException();
+        } catch (FeignException e) {
+            e.printStackTrace();
+        }
+
 
         return customerDTOList;
     }
