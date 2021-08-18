@@ -2,8 +2,8 @@ package aldora.spring.springrest.controllers.v1;
 
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.feign.AccountFeignService;
-import feign.FeignException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -22,9 +23,13 @@ public class MicroServiceController {
 
     private final AccountFeignService accountFeignService;
 
-    public MicroServiceController(RestTemplate restTemplate, AccountFeignService accountFeignService) {
+    private final CircuitBreakerFactory circuitBreakerFactory;
+
+    public MicroServiceController(RestTemplate restTemplate, AccountFeignService accountFeignService,
+                                  CircuitBreakerFactory circuitBreakerFactory) {
         this.restTemplate = restTemplate;
         this.accountFeignService = accountFeignService;
+        this.circuitBreakerFactory = circuitBreakerFactory;
     }
 
     @GetMapping("/getList")
@@ -54,5 +59,16 @@ public class MicroServiceController {
         List<CustomerDTO> customerDTOList = accountFeignService.getCustomerException();
 
         return customerDTOList;
+    }
+
+    @GetMapping("/feign/circuitbreaker")
+    public List<CustomerDTO> getCircuitbreaker() {
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("oops");
+
+
+        return circuitBreaker.run(accountFeignService::getCustomerException,
+                throwable -> Arrays.asList(customerDTO));
     }
 }

@@ -11,6 +11,7 @@ public class CustomerDTO {
 
     @ApiModelProperty(value = "This is the first name", required = true)
     private String firstName;
+
     @ApiModelProperty(required = true )
     private String lastName;
 
