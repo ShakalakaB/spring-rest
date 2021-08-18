@@ -17,37 +17,37 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void boundHashOpsPut(String key, String hashKey, Object hashValue) {
+    public void put(String key, String hashKey, Object hashValue) {
         BoundHashOperations<String, Object, Object> hashOps = getHashOperations(key);
         hashOps.put(hashKey, hashValue);
     }
 
     @Override
-    public void boundHashOpsPutAll(String key, Map<String, Object> value) {
+    public void putAll(String key, Map<String, Object> value) {
         BoundHashOperations<String, Object, Object> hashOps = getHashOperations(key);
         hashOps.putAll(value);
     }
 
     @Override
-    public Object boundHashOpsGet(String key, String hashKey) {
+    public Object get(String key, String hashKey) {
         BoundHashOperations<String, Object, Object> hashOps = getHashOperations(key);
         return hashOps.get(hashKey);
     }
 
     @Override
-    public List<Object> boundHashOpsMultiGet(String key, Collection<Object> hashKeys) {
+    public List<Object> multiGet(String key, Collection<Object> hashKeys) {
         BoundHashOperations<String, Object, Object> hashOps = getHashOperations(key);
         return hashOps.multiGet(hashKeys);
     }
 
     @Override
-    public List<Object> boundHashOpsValues(String key) {
+    public List<Object> values(String key) {
         BoundHashOperations<String, Object, Object> hashOps = getHashOperations(key);
         return hashOps.values();
     }
 
     @Override
-    public Map<Object, Object> boundHashOpsEntries(String key) {
+    public Map<Object, Object> entries(String key) {
         BoundHashOperations<String, Object, Object> hashOps = getHashOperations(key);
         return hashOps.entries();
     }

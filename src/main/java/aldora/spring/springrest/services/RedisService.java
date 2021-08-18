@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface RedisService {
-    void boundHashOpsPut(String key, String hashKey, Object hashValue);
+    void put(String key, String hashKey, Object hashValue);
 
-    void boundHashOpsPutAll(String key, Map<String, Object> value);
+    void putAll(String key, Map<String, Object> value);
 
-    Object boundHashOpsGet(String key, String hashKey);
+    Object get(String key, String hashKey);
 
-    List<Object> boundHashOpsMultiGet(String key, Collection<Object> hashKeys);
+    List<Object> multiGet(String key, Collection<Object> hashKeys);
 
-    List<Object> boundHashOpsValues(String key);
+    List<Object> values(String key);
 
-    Map<Object, Object> boundHashOpsEntries(String key);
+    Map<Object, Object> entries(String key);
 
 }

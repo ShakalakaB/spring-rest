@@ -1,6 +1,7 @@
 package aldora.spring.springrest.services;
 
 import aldora.spring.springrest.SpringRestApplication;
+import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,10 +21,12 @@ class RedisServiceImplTest {
     @Autowired
     RedisService redisService;
 
+    private final String redisKey = "redistest";
+
     @Test
     void boundHashOpsPut() {
-        redisService.boundHashOpsPut("redistest", "WAWA", "KAKA");
-        assertEquals("KAKA", redisService.boundHashOpsGet("redistest", "WAWA"));
+        redisService.put("redistest", "WAWA", "KAKA");
+        assertEquals("KAKA", redisService.get(redisKey, "WAWA"));
     }
 
     @Test
@@ -32,14 +35,23 @@ class RedisServiceImplTest {
         map.put("santa", "claus");
         map.put("kk", "aldora");
         map.put("lemon", "tree");
-        redisService.boundHashOpsPutAll("redistest", map);
-        assertEquals("aldora", redisService.boundHashOpsGet("redistest", "kk"));
+        redisService.putAll("redistest", map);
+        assertEquals("aldora", redisService.get(redisKey, "kk"));
 
-        List<Object> multiGet = redisService.boundHashOpsMultiGet( "redistest", Lists.newArrayList("santa", "kk", "lemon"));
+        List<Object> multiGet = redisService.multiGet( redisKey, Lists.newArrayList("santa", "kk", "lemon"));
         assertEquals(3, multiGet.size());
 
-        List<Object> results = redisService.boundHashOpsValues( "redistest");
+        List<Object> results = redisService.values( redisKey);
 
-        Map<Object, Object> entries = redisService.boundHashOpsEntries("redistest");
+        Map<Object, Object> entries = redisService.entries(redisKey);
+    }
+
+    @Test
+    void putObject() {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(1L);
+        categoryDTO.setName("category name");
+
+        redisService.put(redisKey, "category", categoryDTO);
     }
 }
