@@ -14,12 +14,12 @@ public class FeignErrorDecoder implements ErrorDecoder {
             case 400:
                 return new ResponseStatusException(
                         HttpStatus.valueOf(response.status()),
-                        "400 exception"
+                        "oops, 400 exception"
                 );
             case 404:
                 return new ResponseStatusException(
                         HttpStatus.valueOf(response.status()),
-                        "404 exception"
+                        "oops, 404 exception"
                 );
             default:
                 return new Exception(response.reason());
