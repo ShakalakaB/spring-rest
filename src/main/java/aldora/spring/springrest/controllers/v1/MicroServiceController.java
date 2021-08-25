@@ -71,4 +71,11 @@ public class MicroServiceController {
         return circuitBreaker.run(accountFeignService::getCustomerException,
                 throwable -> Arrays.asList(customerDTO));
     }
+
+    @GetMapping("/feign/fallback")
+    public List<CustomerDTO> getExceptionWithFallback() {
+        List<CustomerDTO> customerDTOList = accountFeignService.exceptionWithCircuitBreaker();
+
+        return customerDTOList;
+    }
 }
