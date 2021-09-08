@@ -2,6 +2,8 @@ package aldora.spring.springrest.controllers.v1;
 
 import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.feign.AccountFeignService;
+import aldora.spring.springrest.feign.FallbackPolicy;
+import io.github.resilience4j.feign.FeignDecorators;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -74,6 +76,7 @@ public class MicroServiceController {
 
     @GetMapping("/feign/fallback")
     public List<CustomerDTO> getExceptionWithFallback() {
+
         List<CustomerDTO> customerDTOList = accountFeignService.exceptionWithCircuitBreaker();
 
         return customerDTOList;

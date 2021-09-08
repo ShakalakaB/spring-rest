@@ -6,6 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class FallbackPolicy implements AccountFeignService {
+    private Exception exception;
+
+    public FallbackPolicy(Exception exception) {
+        this.exception = exception;
+    }
 
     @Override
     public List<CustomerDTO> getCustomerList() {

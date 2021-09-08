@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(value = "ACCOUNT-WS", path = "/api/v1/customers", contextId = "AccountFeignService",
-fallback = FallbackPolicy.class)
+@FeignClient(value = "ACCOUNT-WS", path = "/api/v1/customers", contextId = "AccountFeignService")
 public interface AccountFeignService {
     @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     List<CustomerDTO> getCustomerList();
