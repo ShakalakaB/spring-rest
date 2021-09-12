@@ -4,6 +4,7 @@ import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.feign.AccountFeignService;
 import aldora.spring.springrest.feign.FallbackPolicy;
 import io.github.resilience4j.feign.FeignDecorators;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/microservice")
+@Slf4j
 public class MicroServiceController {
     private final RestTemplate restTemplate;
 
@@ -76,7 +78,7 @@ public class MicroServiceController {
 
     @GetMapping("/feign/fallback")
     public List<CustomerDTO> getExceptionWithFallback() {
-
+        log.info("feign/fallback calling");
         List<CustomerDTO> customerDTOList = accountFeignService.exceptionWithCircuitBreaker();
 
         return customerDTOList;
