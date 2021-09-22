@@ -2,6 +2,7 @@ package aldora.spring.springrest.controllers.v1;
 
 import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import aldora.spring.springrest.api.v1.model.CategoryListDTO;
+import aldora.spring.springrest.batisservice.CategoryMyBatisService;
 import aldora.spring.springrest.domain.Category;
 import aldora.spring.springrest.mybatis.MyPager;
 import aldora.spring.springrest.mybatis.Params;
@@ -24,11 +25,11 @@ import java.util.Map;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @Autowired
-    private CategoryMybatisService categoryMybatisService;
-
     @Autowired(required = false)
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    CategoryMyBatisService categoryMyBatisService;
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -43,7 +44,8 @@ public class CategoryController {
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<Category> getAllCategoriesList() {
-        return categoryMapper.selectList(Wrappers.<Category>query().orderByAsc("id"));
+//        return categoryMapper.selectList(Wrappers.<Category>query().orderByAsc("id"));
+        return categoryMyBatisService.list();
     }
 
     @GetMapping("/list/pager")
