@@ -44,9 +44,8 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers() {
-        return new ResponseEntity<CustomerListDTO>(
-                new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK
-        );
+        List<CustomerDTO> customers = customerService.getAllCustomers();
+        return new ResponseEntity<>(new CustomerListDTO(customers), HttpStatus.OK);
     }
 
     @GetMapping("/list")
