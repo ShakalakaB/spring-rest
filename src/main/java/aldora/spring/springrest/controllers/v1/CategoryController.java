@@ -3,6 +3,7 @@ package aldora.spring.springrest.controllers.v1;
 import aldora.spring.springrest.api.v1.model.CategoryDTO;
 import aldora.spring.springrest.api.v1.model.CategoryListDTO;
 import aldora.spring.springrest.services.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categories")
+@Slf4j
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -28,6 +30,7 @@ public class CategoryController {
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> getAllCategoriesList() {
+        log.info("account service /list called");
         return categoryService.getAllCategories();
     }
 
