@@ -15,4 +15,8 @@
         + location: /media/java-projects/elk/kibana-7.14.0-linux-x86_64
         + cmd to run: `bin/kibana`
         + default port: http://localhost:5601
+    
++ command to run different profile
+    + ` mvn spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=production
+      `
 
