@@ -1,9 +1,11 @@
 package aldora.spring.springrest.config;
 
-import aldora.spring.springrest.api.filters.AuthenticationFilter;
+import aldora.spring.springrest.api.filters.AuthorizationFilter;
+import aldora.spring.springrest.api.filters.UserPasswordAuthenticationFilter;
 import aldora.spring.springrest.services.CustomerService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,18 +28,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+//        http.authorizeRequests()
+//                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/actuator/**").permitAll()
+//                .and()
+//                .addFilter(getAuthenticationFilter());
         http.authorizeRequests()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/actuator/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/users").hasIpAddress(environment.getProperty("gateway.ip"))
+                .antMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .addFilter(getAuthenticationFilter());
-//        http.authorizeRequests().antMatchers("/**").hasIpAddress(environment.getProperty("gateway.ip"));
+                .addFilter(getAuthenticationFilter())
+                .addFilter(new AuthorizationFilter(authenticationManager(), environment));
         http.headers().frameOptions().disable();
     }
 
-    private AuthenticationFilter getAuthenticationFilter() throws Exception
+    private UserPasswordAuthenticationFilter getAuthenticationFilter() throws Exception
     {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter(customerService, environment, authenticationManager());
+        UserPasswordAuthenticationFilter authenticationFilter = new UserPasswordAuthenticationFilter(customerService, environment, authenticationManager());
 //        authenticationFilter.setAuthenticationManager(authenticationManager());
         authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
         return authenticationFilter;

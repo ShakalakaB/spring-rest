@@ -24,11 +24,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class UserPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final CustomerService customerService;
     private final Environment environment;
 
-    public AuthenticationFilter(CustomerService customerService, Environment environment, AuthenticationManager authenticationManager) {
+    public UserPasswordAuthenticationFilter(CustomerService customerService, Environment environment, AuthenticationManager authenticationManager) {
         this.customerService = customerService;
         this.environment = environment;
         super.setAuthenticationManager(authenticationManager);
