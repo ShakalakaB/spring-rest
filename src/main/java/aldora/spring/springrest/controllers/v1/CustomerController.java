@@ -9,6 +9,7 @@ import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,12 @@ public class CustomerController {
 
     @GetMapping("/list")
     public List<CustomerDTO> getAllCategoriesList() {
+        return customerService.getAllCustomers();
+    }
+
+    @PreAuthorize("#name == authentication.principal")
+    @GetMapping("/list/{name}")
+    public List<CustomerDTO> getAllCategoriesList2(@PathVariable String name) {
         return customerService.getAllCustomers();
     }
 
