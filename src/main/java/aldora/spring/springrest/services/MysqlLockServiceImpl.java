@@ -27,8 +27,6 @@ public class MysqlLockServiceImpl implements MysqlLockService {
     private final CustomerRepository customerRepository;
     @PersistenceUnit
     private final EntityManagerFactory entityManagerFactory;
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Override
     public void execute(Integer value) {
@@ -50,9 +48,11 @@ public class MysqlLockServiceImpl implements MysqlLockService {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-            Query query = session.createNativeQuery(String.format("SELECT * FROM payment WHERE state = %s FOR UPDATE", value));
-//            Query query = session.createNativeQuery(String.format("SELECT * FROM payment WHERE state > %s FOR UPDATE", value));
-            query.getResultList();
+//            selectForUpdate(value, session);
+//            select(value, session);
+//            update(value, session);
+//            insert(session);
+            insert1(session);
 
             try {
                 Thread.sleep(60000);
@@ -62,6 +62,38 @@ public class MysqlLockServiceImpl implements MysqlLockService {
 
             session.getTransaction().commit();
         });
+    }
+
+    private void selectForUpdate(Integer value, Session session) {
+        Query query = session.createNativeQuery(String.format("SELECT * FROM payment WHERE state = %s FOR UPDATE", value));
+//            Query query = session.createNativeQuery(String.format("SELECT * FROM payment WHERE state < %s FOR UPDATE", value));
+        query.getResultList();
+    }
+
+    private void select(Integer value, Session session) {
+        Query query = session.createNativeQuery(String.format("SELECT * FROM payment WHERE state = %s", value));
+        query.getResultList();
+    }
+
+    private void update(Integer value, Session session) {
+        Query query = session.createNativeQuery(String.format("UPDATE payment SET description = 'updated' WHERE id = %s", value));
+        query.executeUpdate();
+    }
+
+    private void insert(Session session) {
+        Optional<Customer> customerOptional = customerRepository.findById(1L);
+        Customer customer = customerOptional.get();
+
+        Payment payment = new Payment();
+        payment.setState(104);
+        payment.setDescription("payment from app");
+        payment.setCustomer(customer);
+        session.save(payment);
+    }
+
+    private void insert1(Session session) {
+        Query query = session.createNativeQuery("insert into test.payment (description, state, customer_id) values ( 'payment3', 104, 1);");
+        query.executeUpdate();
     }
 
     CompletableFuture<Void> insertOnGAPLock(Integer value) {
@@ -79,7 +111,7 @@ public class MysqlLockServiceImpl implements MysqlLockService {
             Customer customer = customerOptional.get();
 
             Payment payment = new Payment();
-            payment.setState(value + 1);
+            payment.setState(value + 2);
             payment.setDescription("inserted payment");
             payment.setCustomer(customer);
             session.save(payment);

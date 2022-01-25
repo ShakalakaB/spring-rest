@@ -57,26 +57,32 @@ public class DataBootstrap implements CommandLineRunner {
         Payment payment1 = new Payment();
         payment1.setDescription("payment1");
         payment1.setCustomer(customer1);
-        payment1.setState(0);
+        payment1.setState(102);
         paymentRepository.save(payment1);
 
         Payment payment2 = new Payment();
         payment2.setDescription("payment2");
         payment2.setCustomer(customer1);
-        payment2.setState(1);
+        payment2.setState(100);
         paymentRepository.save(payment2);
 
         Payment payment3 = new Payment();
         payment3.setDescription("payment3");
         payment3.setCustomer(customer2);
-        payment3.setState(2);
+        payment3.setState(104);
         paymentRepository.save(payment3);
 
         Payment payment4 = new Payment();
         payment4.setDescription("payment4");
         payment4.setCustomer(customer2);
-        payment4.setState(3);
+        payment4.setState(106);
         paymentRepository.save(payment4);
+
+        Payment payment5 = new Payment();
+        payment5.setDescription("payment3");
+        payment5.setCustomer(customer1);
+        payment5.setState(104);
+        paymentRepository.save(payment5);
 
         System.out.println("Payments loaded = " + paymentRepository.count());
     }

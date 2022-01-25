@@ -22,7 +22,7 @@ public class Payment {
     private Customer customer;
 
     /**
-     * 付款状态：0-未付款 1-已付款 2-已退款 3-部分退款
+     * 付款状态：100-未付款 102-已付款 104-已退款 106-部分退款
      */
     @Column(name = "state", nullable = false)
     private Integer state;
