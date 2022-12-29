@@ -30,4 +30,11 @@ public class DemoController {
         paymentService.execute(value);
         return "ok";
     }
+
+    @GetMapping("/transaction")
+    @ResponseStatus(HttpStatus.OK)
+    public String executeTransaction() {
+        paymentService.executeTransaction();
+        return "ok";
+    }
 }

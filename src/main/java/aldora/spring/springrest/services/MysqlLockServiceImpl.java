@@ -1,5 +1,6 @@
 package aldora.spring.springrest.services;
 
+import aldora.spring.springrest.api.v1.model.CustomerDTO;
 import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.domain.Payment;
 import aldora.spring.springrest.repositories.CustomerRepository;
@@ -9,12 +10,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -25,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 public class MysqlLockServiceImpl implements MysqlLockService {
     private final PaymentRepository paymentRepository;
     private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
     @PersistenceUnit
     private final EntityManagerFactory entityManagerFactory;
 
@@ -37,6 +45,37 @@ public class MysqlLockServiceImpl implements MysqlLockService {
 //        } catch (InterruptedException | ExecutionException e) {
 //            log.error("insertOnGAPLock error: ", e);
 //        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void executeTransaction() {
+        Optional<Customer> customerOptional = customerRepository.findById(1L);
+        Customer customer = customerOptional.get();
+
+        Payment payment1 = new Payment();
+        payment1.setState(102);
+        payment1.setDescription("payment from app");
+        payment1.setCustomer(customer);
+        paymentRepository.save(payment1);
+
+        Payment payment2 = new Payment();
+        payment2.setState(102);
+        payment2.setDescription("payment from app");
+        payment2.setCustomer(customer);
+        paymentRepository.save(payment2);
+
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+            @Override
+            public void afterCommit() {
+                log.info("inside after submit");
+
+                CustomerDTO customer2 = new CustomerDTO();
+                customer2.setFirstName("commit");
+                customer2.setLastName("CCC");
+                customerService.store(customer2);
+            }
+        });
     }
 
     /**

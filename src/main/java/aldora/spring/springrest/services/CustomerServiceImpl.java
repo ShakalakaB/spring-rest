@@ -7,6 +7,8 @@ import aldora.spring.springrest.domain.Customer;
 import aldora.spring.springrest.repositories.CustomerRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public CustomerDTO store(CustomerDTO customerDTO) {
         Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
         return saveCustomerDTO(customer);
